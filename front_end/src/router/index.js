@@ -44,6 +44,21 @@ const routes = [
         name: 'manageUser',
         component: () => import('@/views/admin/manageUser')
       },
+      {
+        path: '/marketingStaff/manageOrder',
+        name:'manageOrder',
+        component:()=>import('@/views/marketingStaff/manageOrder')
+      },
+      {
+        path: '/marketingStaff/manageCoupon',
+        name:'manageCoupon',
+        component:()=>import('@/views/marketingStaff/manageVoucher')
+      },
+      {
+        path:`/marketingStaff/creditCharge`,
+        name:'creditCharge',
+        component:()=>import(`@/views/marketingStaff/chargeCredit`)
+      }
     ]
   },
 ]

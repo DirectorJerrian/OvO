@@ -14,6 +14,11 @@ public class UserVO {
     private String phoneNumber;
     private double credit;
     private UserType userType;
+    private Integer VIP;
+
+    public Integer getVIP(){return VIP;}
+
+    public void setVIP(Integer VIP){this.VIP=VIP;}
 
     public Integer getId() {
         return id;

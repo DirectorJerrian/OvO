@@ -4,7 +4,10 @@ import com.example.hotel.po.HotelRoom;
 import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
+import com.example.hotel.vo.HotelSearchVO;
 import com.example.hotel.vo.HotelVO;
+import com.example.hotel.vo.ResponseVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +20,12 @@ public interface HotelService {
      */
     void addHotel(HotelVO hotelVO) throws ServiceException;
 
+    /**
+     * 删除酒店
+     * @param hotelId
+     * @throws
+     */
+    void deleteHotel(int hotelId) throws ServiceException;
 
     /**
      * 预订酒店修改剩余客房信息
@@ -31,6 +40,16 @@ public interface HotelService {
      * @return
      */
     List<HotelVO> retrieveHotels();
+    /**
+    * 获取目标酒店信息
+    * */
+    List<HotelVO> hotelSearch(HotelSearchVO hotelSearchVO);
+
+    /**
+     * 列表获取管理员管理目标酒店列表
+     * @param userid
+     */
+    List<HotelVO> getTargetHotel(int userid);
 
     /**
      * 获取某家酒店详细信息
@@ -47,12 +66,17 @@ public interface HotelService {
      */
     int getRoomCurNum(Integer hotelId,String roomType);
 
-    /**
-     * 查看酒店的所有订单
-     * @param hotelId
-     * @return
-     */
-    List<Order> getHotelOrders(Integer hotelId);
+    ResponseVO updateHotelInfo(int id, String name,String bizRegion, String description);
+    /** @param cover */
+    ResponseVO updateHotelCover(int id, MultipartFile cover);
+
+    /*
+    * 获得所有商圈
+    * */
+
+    List<String> getBizRegions();
+
+    int findHotel(String hotelName);
 
 
 }

@@ -5,6 +5,12 @@
     <select id="getAllOrders" resultMap="Order">
         select * from OrderList
     </select>
+
+    <select id="getStrangeOrders" resultMap="Order">
+        select * from OrderList
+        where orderState='异常' or orderState='已预订'
+    </select>
+
     <select id="getUserOrders" resultMap="Order">
         select * from OrderList where userId=#{userid}
     </select>
@@ -15,8 +21,58 @@
     <select id="getOrderById" resultMap="Order">
         select * from OrderList where id=#{orderid}
     </select>
-   <!--取消订单的数据库操作-->
+    <select id="getTargetOrders" resultMap="Order">
+        select * from OrderList where hotelId in(
+            select id from Hotel where Hotel.manager_id=#{userid}
+        )
+    </select>
 
+    <select id="getHotelUserOrders" resultMap="Order">
+        select * from OrderList where hotelId=#{hotelId} and userId=#{userId}
+    </select>
+   <!--取消订单的数据库操作-->
+    <update id="annulOrder">
+        update OrderList set orderState="已取消"
+        where id=#{orderid}
+    </update>
+
+    <update id="setOrderAdded">
+        update OrderList set orderState="已预订"
+        where id=#{orderid}
+    </update>
+
+    <!--执行订单-->
+    <update id="executeOrder">
+        update OrderList set orderState="已入住"
+        where id=#{orderid}
+    </update>
+
+    <!--设置评分-->
+    <update id="orderRate">
+        update OrderList  set  rate=#{rate}
+        where id=#{orderid} ;
+    </update>
+
+    <!--评价订单的数据库操作-->
+    <update id="rateOrder">
+        update OrderList set orderState="已评价"
+        where id=#{orderid}
+    </update>
+
+    <!--获取平均数-->
+    <select id="avgRate" resultType="double" >
+        select avg(rate) from OrderList
+        where hotelId=#{hotelId} and orderState="已评价"
+    </select>
+
+    <update id="updateOverTimeOrder">
+        update OrderList set orderState="异常"
+        where id=#{orderid}
+    </update>
+
+    <update id="delectOrderOnly">
+        update OrderList set orderState="已取消" where id=#{orderid}
+    </update>
 
 
     <resultMap id="Order" type="com.example.hotel.po.Order">

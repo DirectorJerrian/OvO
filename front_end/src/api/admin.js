@@ -15,3 +15,10 @@ export function addManagerAPI(data) {
         data
     })
 }
+export function deleteManagerAPI(data) {
+    return axios({
+        url: `${api.adminPre}/deleteManager`,
+        method: 'POST',
+        data
+    })
+}

@@ -11,12 +11,16 @@
                 <span slot="price" slot-scope="text">
                     <span>￥{{ text }}</span>
                 </span>
-                <span slot="action" slot-scope="text, record">
-                    <a-button type="primary" @click="order(record)">预定</a-button>
+                <span slot="action" slot-scope="text, record" >
+                    <a-button type="primary" @click="order(record)" v-if="userInfo.userType=='Client'">预定</a-button>
+                    <a-button-group v-if="userInfo.userType=='HotelManager'">
+                      <a-button icon="plus" @click="handleAdd(record)"/>
+                      <a-button icon="minus" @click="handleSub(record)"/>
+                    </a-button-group>
                 </span>
             </a-table>
         </div>
-        <OrderModal></OrderModal>
+        <OrderModal style="width: 70%"></OrderModal>
     </div>
 </template>
 <script>
@@ -29,19 +33,14 @@ const columns = [
       key: 'roomType',
     },
     {
-      title: '床型',
-      dataIndex: 'bedType',
-      key: 'bedType',
+      title: '当前房间数量',
+      dataIndex: 'curNum',
+      key: 'curNum',
     },
     {
-      title: '早餐',
-      dataIndex: 'breakfast',
-      key: 'breakfast',
-    },
-    {
-      title: '入住人数',
-      key: 'peopleNum',
-      dataIndex: 'peopleNum',
+      title: '房间总数',
+      dataIndex: 'total',
+      key: 'total',
     },
     {
       title: '房价',
@@ -50,11 +49,38 @@ const columns = [
       scopedSlots: { customRender: 'price'}
     },
     {
-      title: 'Action',
+      title: '操作',
       key: 'action',
       scopedSlots: { customRender: 'action' },
     },
   ];
+const columns1 = [
+    {
+        title: '勾选',
+        dataIndex: 'id',
+        scopedSlots: {customRender: 'id'}
+
+    },
+    {
+        title: '优惠描述',
+        dataIndex: 'description',
+
+    },
+    {
+        title: '会员专享折扣',
+        dataIndex: 'discount',
+    },
+
+    {
+        title: '剩余数量',
+        dataIndex: 'number',
+
+    },
+    {
+        title: '优惠金额',
+        dataIndex: 'discount_money',
+    },
+];
 export default {
     name:'roomList',
     props: {
@@ -65,6 +91,7 @@ export default {
     data() {
         return {
             columns,
+            columns1
         }
     },
     components: {
@@ -72,11 +99,12 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'orderModalVisible'
+            'orderModalVisible',
+            'userInfo',
+            'userId'
         ])
     },
     monuted() {
-
     },
     methods: {
         ...mapMutations([
@@ -84,11 +112,31 @@ export default {
             'set_currentOrderRoom'
         ]),
         ...mapActions([
-
+            'addNum',
+            'subNum'
         ]),
         order(record) {
             this.set_currentOrderRoom(record)
             this.set_orderModalVisible(true)
+        },
+        handleAdd(record){
+            console.log(record)
+            const data={
+                roomId:record.id
+            }
+            record.total++
+            record.curNum++
+            this.addNum(data)
+        },
+        handleSub(record){
+            const data={
+                roomId:record.id
+            }
+            if(record.total>0) {
+                record.curNum--
+                record.total--
+                this.subNum(data)
+            }
         }
     }
 }

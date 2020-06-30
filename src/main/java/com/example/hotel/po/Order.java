@@ -22,6 +22,7 @@ public class Order {
     private String clientName;
     private String phoneNumber;
     private String orderState;
+    private Integer rate;
 
     public Integer getId() {
         return id;
@@ -141,5 +142,13 @@ public class Order {
 
     public void setOrderState(String orderState) {
         this.orderState = orderState;
+    }
+
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
     }
 }

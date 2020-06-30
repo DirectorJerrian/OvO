@@ -1,16 +1,23 @@
 package com.example.hotel.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class CORSConfig {
+
+public class CORSConfig{
+
+
     private static String[] originsVal = new String[]{
             "localhost:8000",
             "127.0.0.1:8000",
+            "localhost:8001",
+            "127.0.0.1:8001",
             "127.0.0.1",
             "localhost",
             "172.19.144.143",

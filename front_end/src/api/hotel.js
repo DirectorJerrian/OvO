@@ -14,3 +14,52 @@ export function getHotelByIdAPI(param) {
         method: 'GET',
     })
 }
+export function findHotelAPI(hotelName) {
+    return axios({
+        url:`${api.hotelPre}/${hotelName}/findHotel`,
+        method:'GET',
+    })
+
+}
+export function addRoomNumAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/${data.roomId}/addNum`,
+        method: 'POST',
+        data,
+    })
+}
+export function subRoomNumAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/${data.roomId}/subNum`,
+        method: 'POST',
+        data,
+    })
+}
+export function getTargetHotelAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/${data.userId}/getTargetHotel`,
+        method: `GET`,
+    })
+}
+export function hotelSearchAPI(params){
+    return axios({
+        url: `${api.hotelPre}/hotelSearch`,
+        method:`GET`,
+        params
+    })
+}
+
+export function getBizRegionsAPI() {
+    return axios({
+        url: `${api.hotelPre}/getBizRegions`,
+        method: 'GET',
+    })
+}
+
+export function hasTypeAPI(data) {
+    return axios({
+        url:`${api.hotelPre}/${data}/hasType`,
+        method:`GET`,
+    })
+
+}

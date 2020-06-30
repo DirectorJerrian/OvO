@@ -2,6 +2,7 @@ package com.example.hotel.blImpl.admin;
 
 import com.example.hotel.bl.admin.AdminService;
 import com.example.hotel.data.admin.AdminMapper;
+import com.example.hotel.data.user.AccountMapper;
 import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.ResponseVO;
@@ -18,10 +19,18 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
     private final static String ACCOUNT_EXIST = "账号已存在";
+    private final static String USER_NOT_EXIST = "账号不存在";
+
     @Autowired
     AdminMapper adminMapper;
+
+    @Autowired
+    AccountMapper accountMapper;
+
     @Override
     public ResponseVO addManager(UserForm userForm) {
+        User check=accountMapper.getAccountByName(userForm.getEmail());
+        if(check!=null) return ResponseVO.buildFailure(ACCOUNT_EXIST);
         User user = new User();
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
@@ -38,5 +47,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<User> getAllManagers() {
         return adminMapper.getAllManagers();
+    }
+
+    @Override
+    public ResponseVO deleteManager(int userId){
+        try{
+            adminMapper.deleteManager(userId);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseVO.buildFailure(USER_NOT_EXIST);
+        }
+        return ResponseVO.buildSuccess(true);
     }
 }

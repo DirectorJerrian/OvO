@@ -21,6 +21,7 @@ public class TargetMoneyCouponStrategyImpl implements CouponMatchStrategy {
     public boolean isMatch(OrderVO orderVO, Coupon coupon) {
 
         if (coupon.getCouponType() == 3 && orderVO.getPrice() >= coupon.getTargetMoney()) {
+            System.out.println(3);
             return true;
         }
 

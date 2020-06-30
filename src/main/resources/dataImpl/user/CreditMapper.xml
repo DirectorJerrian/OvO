@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.data.user.CreditMapper">
+
+    <insert id="createNewRecord" parameterType="com.example.hotel.po.CreditRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into creditchangelist(userId,operationDate, orderId, operation, credit_delta, credit_result)
+        values (#{userId},#{operationDate},#{orderId},#{operation},#{credit_delta},#{credit_result})
+    </insert>
+
+    <select id="getUserRecords" resultMap="CreditRecord">
+        select * from creditchangelist where userId=#{userid}
+    </select>
+
+    <resultMap id="CreditRecord" type="com.example.hotel.po.CreditRecord">
+
+    </resultMap>
+
+</mapper>

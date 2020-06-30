@@ -4,9 +4,13 @@
 
     <insert id="insertCoupon" parameterType="com.example.hotel.po.Coupon"
             useGeneratedKeys="true" keyProperty="id">
-        insert into Coupon(description,couponName,target_money,discount_money,start_time,end_time,hotelId,couponType,discount,status)
+        insert into coupon(description,couponName,target_money,discount_money,start_time,end_time,hotelId,couponType,discount,status)
         values(#{description},#{couponName},#{targetMoney},#{discountMoney},#{startTime},#{endTime},#{hotelId},#{couponType},#{discount},#{status})
     </insert>
+
+    <select id="selectAllCoupon" resultMap="Coupon">
+        select * from Coupon where status!="0"
+    </select>
 
     <select id="selectByHotelId" resultMap="Coupon">
         select * from Coupon where hotelId=#{hotelId}

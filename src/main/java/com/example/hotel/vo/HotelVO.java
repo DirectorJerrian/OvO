@@ -17,6 +17,7 @@ public class HotelVO {
     private String description;
     private String phoneNum;
     private Integer managerId;
+    private String cover;
 
     private List<RoomVO> rooms;
 
@@ -99,4 +100,8 @@ public class HotelVO {
     public void setManagerId(Integer managerId) {
         this.managerId = managerId;
     }
+
+    public String getCover() { return cover; }
+
+    public void setCover(String cover) { this.cover = cover; }
 }

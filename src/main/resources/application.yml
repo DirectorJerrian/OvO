@@ -1,17 +1,28 @@
 spring:
+  application:
+    name: service-oss
+  profiles:
+    active: dev
   datasource:
-     url: jdbc:mysql://localhost:3306/Hotel?serverTimezone=CTT&characterEncoding=UTF-8
-     username: root
-     password: root
-     driver-class-name: com.mysql.cj.jdbc.Driver
-     max-active: 200
-     max-idle: 20
-     min-idle: 10
+    url: jdbc:mysql://localhost:3306/Hotel?serverTimezone=CTT&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    max-active: 200
+    max-idle: 20
+    min-idle: 10
   thymeleaf:
-     cache: false
+    cache: false
   jackson:
     time-zone: GMT+8
 
 mybatis:
   mapper-locations: classpath:dataImpl/*/*Mapper.xml
 
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      keyid: LTAI4G8aY3VqV55xwwtvfNyi
+      keysecret: NoITeRzQHAoFSm9OTx70Oj1TeK1P0G
+      bucketname: software-engineering-ii

@@ -4,7 +4,7 @@
         <div class="header">
           <div>
             <!-- <img src="@/assets/logo.svg" class="logo" alt="logo"> -->
-            <span class="title">NJU酒店管理系统</span>
+            <span class="title">OvO</span>
           </div>
         </div>
         <div class="desc">
@@ -237,7 +237,8 @@ export default {
             phoneNumber: this.form.getFieldValue('registerPhoneNumber'),
             username: this.form.getFieldValue('registerUsername'),
             credit: 100,
-            userType: 1
+            userType: "Client",
+
           }
           await this.register(data).then(() => {
             this.customActiveKey = 'tab1'
@@ -258,8 +259,13 @@ export default {
 <style lang="less" scoped>
 
 .main{
+    border-radius: 36px;
+    background: transparent;
+    z-index: 1;
+    padding: 60px;
+    position: relative;
     min-width: 260px;
-    width: 368px;
+    width: 500px;
     margin: 100px auto;
     .top {
         text-align: center;

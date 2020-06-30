@@ -7,11 +7,43 @@
         values (#{address},#{bizRegion},#{description},#{hotelStar},#{hotelName},#{phoneNum},#{rate},#{managerId})
     </insert>
 
+    <delete id="deleteHotel">
+        delete from hotel where id=#{id}
+    </delete>
+
     <select id="selectAllHotel" resultMap="Hotel">
         select * from Hotel
     </select>
+
+    <select id="getBizRegions" resultMap="bizRegion">
+        select bizRegion from Hotel
+    </select>
+
+    <select id="selectQualifiedHotel" resultMap="Hotel">
+        select * from Hotel
+        where bizRegion=#{bizRegion} and rate<![CDATA[ >= ]]>#{rate}
+    </select>
+
     <select id="selectById" resultMap="Hotel">
         select * from Hotel where id=#{id}
+    </select>
+
+    <select id="selectManager" resultMap="Hotel">
+        select * from Hotel where manager_id=#{userid}
+    </select>
+
+    <update id="updateCoverURL">
+        update Hotel set cover=#{cover}
+        where id=#{id}
+    </update>
+
+    <update id="updateHotel">
+        update Hotel set hotelName=#{hotelName},bizRegion=#{bizRegion},hotelDescription=#{hotelDescription}
+        where id=#{id}
+    </update>
+
+    <select id="findHotel" resultType="int">
+        select id from Hotel where hotelName=#{hotelName};
     </select>
 
 
@@ -25,8 +57,21 @@
         <result column="phoneNum" property="phoneNum"></result>
         <result column="rate" property="rate"></result>
         <result column="manager_id" property="managerId"></result>
+        <result column="cover" property="cover"></result>
 
     </resultMap>
+
+    <resultMap id="bizRegion" type="String">
+        <result column="bizRegion" property="bizRegion"></result>
+
+    </resultMap>
+
+
+    <!--设置评分-->
+    <update id="setRate">
+        update Hotel set rate=#{rate}
+        where id =#{id}
+    </update>
 
 
 </mapper>

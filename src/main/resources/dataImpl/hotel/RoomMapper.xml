@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.hotel.data.hotel.RoomMapper">
 
-    <insert id="insertRoom" parameterType="com.example.hotel.po.HotelRoom"
+    <insert id="insertRoom" parameterType="com.example.hotel.vo.RoomVO"
     useGeneratedKeys="true" keyProperty="id">
         insert into Room(roomType,price,curNum,total,hotel_id)
         values (#{roomType},#{price},#{curNum},#{total},#{hotelId})
@@ -10,6 +10,11 @@
 
     <select id="selectRoomsByHotelId" resultMap="room">
         select * from Room where hotel_id=#{hotelId}
+    </select>
+
+    <select id="roomSatisfaction" resultMap="room">
+        select * from Room
+        where roomType=#{roomType} and hotel_id=#{hotel_id}
     </select>
 
     <update id="updateRoomInfo">
@@ -20,6 +25,33 @@
         select curNum from Room where hotel_id=#{hotelId} and roomType=#{roomType}
     </select>
 
+    <select id="addTargetNum" resultMap="room">
+        update Room set total=total+1 curNum=curNum+1 where id=#{roomId}
+    </select>
+
+    <select id="subTargetNum" >
+        update Room set total=total-1,curNum=curNum-1 where id=#{roomId}
+    </select>
+
+    <select id="getBig" resultMap="room">
+        select * from Room where hotel_id=#{hotelId} and roomType='BigBed'
+    </select>
+
+    <select id="getDouble" resultMap="room">
+        select * from Room where hotel_id=#{hotelId} and roomType='DoubleBed'
+    </select>
+
+
+    <select id="getFam" resultMap="room">
+        select * from Room where hotel_id=#{hotelId} and roomType='Family'
+    </select>
+
+
+
+
+    <delete id="deleteRoomsByHotelId">
+        delete from Room where hotel_id=#{hotelId}
+    </delete>
 
     <resultMap id="room" type="com.example.hotel.po.HotelRoom">
         <id column="id" property="id"></id>

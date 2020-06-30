@@ -14,7 +14,7 @@
                     'roomType', 
                     { rules: [{ required: true, message: '请选择房型' }] }]"
                 >
-                  <a-select-option value="BigBed">大床房</a-select-option>
+                  <a-select-option  value="BigBed">大床房</a-select-option>
                   <a-select-option value="DoubleBed">双床房</a-select-option>
                   <a-select-option value="Family">家庭房</a-select-option>
                 </a-select>
@@ -50,19 +50,22 @@ export default {
                     sm: { span: 16 },
                 },
             },
+
         }
     },
     computed: {
         ...mapGetters([
             'addRoomModalVisible',
-            'activeHotelId'
+            'activeHotelId',
+            'hasBig',
+            'hasDouble',
+            'hasFam',
         ])
     },
     beforeCreate() {
         this.form = this.$form.createForm(this, { name: 'addRoomModal' });
     },
     mounted() {
-
     },
     methods: {
         ...mapMutations([
@@ -70,7 +73,8 @@ export default {
             'set_addRoomParams'
         ]),
         ...mapActions([
-            'addRoom'
+            'addNewRoom',
+            'hasType'
         ]),
         cancel() {
             this.set_addRoomModalVisible(false)
@@ -87,7 +91,7 @@ export default {
                         hotelId: this.activeHotelId,
                     }
                     this.set_addRoomParams(data)
-                    this.addRoom()
+                    this.addNewRoom()
                 }
             });
         },

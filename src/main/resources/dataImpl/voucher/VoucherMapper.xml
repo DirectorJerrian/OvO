@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.data.voucher.VoucherMapper">
+
+    <insert id="addVoucher" parameterType="com.example.hotel.po.Voucher" useGeneratedKeys="true" keyProperty="id">
+        insert into voucher(userId,description,discount,target_money, discount_money, number, status)
+        values (#{userId},#{description},#{discount},#{target_money},#{discount_money},#{number},#{status})
+    </insert>
+
+    <select id="getUserVoucher" resultMap="Voucher">
+        select * from Voucher
+        where userId=#{userId}
+    </select>
+
+    <select id="getAllVoucher" resultMap="Voucher">
+        select * from Voucher where userId is null
+    </select>
+
+    <select id="getUserAvailableVoucher" resultMap="Voucher">
+        select * from Voucher
+        where userId=#{userId} and target_money<![CDATA[ <= ]]>#{targetMoney} and status='可使用'
+    </select>
+
+    <update id="useVoucher">
+        update Voucher set number=number-1
+        where id = #{id}
+    </update>
+
+    <update id="refreshVoucher">
+        update Voucher set status='不可用'
+        where number=0
+    </update>
+
+    <select id="getVoucher" resultMap="Voucher">
+        select * from Voucher
+        where id=#{id}
+    </select>
+
+    <update id="update">
+        update Voucher set status='可使用'
+        where id=#{id}
+    </update>
+
+
+    <resultMap id="Voucher" type="com.example.hotel.po.Voucher">
+        <result column="id" property="id"></result>
+        <result column="userId" property="userId"></result>
+        <result column="description" property="description"></result>
+        <result column="discount" property="discount"></result>
+        <result column="target_money" property="target_money"></result>
+        <result column="discount_money" property="discount_money"></result>
+        <result column="number" property="number"></result>
+        <result column="status" property="status"></result>
+    </resultMap>
+
+
+</mapper>

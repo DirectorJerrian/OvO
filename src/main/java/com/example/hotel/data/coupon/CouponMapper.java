@@ -11,5 +11,7 @@ import java.util.List;
 public interface CouponMapper {
     int insertCoupon(Coupon coupon);
 
+    List<Coupon> selectAllCoupon();
+
     List<Coupon> selectByHotelId(Integer hotelId);
 }

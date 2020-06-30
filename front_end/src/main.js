@@ -6,6 +6,8 @@ import 'ant-design-vue/dist/antd.css'
 import store from './store'
 
 import '@/permission'
+import VueParticles from 'vue-particles'
+
 Vue.config.productionTip = false
 const options = {
   namespace: 'pro__',
@@ -13,7 +15,7 @@ const options = {
   storage: 'local'
 }
 Vue.use(Antd)
-
+Vue.use(VueParticles)
 Vue.directive('title', {
   inserted: function (el, binding) {
     document.title = el.dataset.title

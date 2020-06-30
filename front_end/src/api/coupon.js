@@ -9,6 +9,13 @@ export function hotelTargetMoneyAPI(data) {
         data,
     })
 }
+export function getAllCouponAPI() {
+    return axios({
+        url: `${api.couponPre}/allCoupon`,
+        method: 'GET'
+    })
+
+}
 
 export function hotelAllCouponsAPI(hotelId) {
     return axios({

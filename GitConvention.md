@@ -45,7 +45,7 @@ git commit -m 'feat: xxx'
 git push --set-upstream origin release
 ~~~
 
-只有master分支可以进行Prod环境部署。
+只有master分支可以进行Prod环境部署。1
 
 ~~~bash
 git checkout -b master

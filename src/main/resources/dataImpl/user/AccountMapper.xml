@@ -8,14 +8,41 @@
     <select id="getAccountByName" resultMap="User">
         select * from User where email=#{email}
     </select>
+    <select id="getAccountByphoneNumber" resultMap="User">
+        select * from User where phoneNumber=#{phoneNumber}
+    </select>
     <select id="getAccountById" resultMap="User">
         select * from User where id=#{id}
     </select>
+    <select id="getAllUser" resultMap="User">
+        select * from User where userType='Client'
+    </select>
     <update id="updateAccount">
-        update User set password=#{password},username=#{userName},phonenumber=#{phoneNumber}
+        update User set username=#{userName},phonenumber=#{phoneNumber}
+        where id=#{id}
+    </update>
+    <update id="updatePassword">
+        update User set password=#{password}
+        where id=#{id}
+    </update>
+    <update id="updateUserCredit">
+        update User set credit=#{credit} where id=#{id}
+    </update>
+
+    <update id="updateAvatarURL">
+        update User set avatar=#{avatar}
         where id=#{id}
     </update>
 
+    <update id="registerVIP">
+        update User set VIP=1
+        where id=#{id}
+    </update>
+
+    <update id="updateVIPCard">
+        update Vipcardlist set vip_credit=#{vip_credit},level=#{level},savings=#{savings}
+        where userId=#{userId}
+    </update>
 
     <resultMap id="User" type="com.example.hotel.po.User">
         <id column="id" property="id"></id>
@@ -25,5 +52,7 @@
         <result column="phonenumber" property="phoneNumber"></result>
         <result column="credit" property="credit"></result>
         <result column="usertype" property="userType"></result>
+        <result column="avatar" property="avatar"></result>
+        <result column="VIP" property="VIP"></result>
     </resultMap>
 </mapper>

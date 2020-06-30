@@ -18,22 +18,18 @@ import java.util.List;
 public class CouponServiceImpl implements CouponService {
 
 
-    private final  TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy;
-
-    private final  TimeCouponStrategyImpl timeCouponStrategy;
     private final CouponMapper couponMapper;
 
     private static List<CouponMatchStrategy> strategyList = new ArrayList<>();
 
     @Autowired
-    public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,
-                             TimeCouponStrategyImpl timeCouponStrategy,
+    public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,MultipleRoomStrategyImpl multipleRoomStrategy,TimeCouponStrategyImpl timeCouponStrategy,
                              CouponMapper couponMapper) {
         this.couponMapper = couponMapper;
-        this.targetMoneyCouponStrategy = targetMoneyCouponStrategy;
-        this.timeCouponStrategy = timeCouponStrategy;
         strategyList.add(targetMoneyCouponStrategy);
+        strategyList.add(multipleRoomStrategy);
         strategyList.add(timeCouponStrategy);
+        //strategyList.add(timeCouponStrategy);
     }
 
 
@@ -57,6 +53,11 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
+    public List<Coupon> getAllCoupon(){
+        return couponMapper.selectAllCoupon();
+    }
+
+    @Override
     public List<Coupon> getHotelAllCoupon(Integer hotelId) {
         List<Coupon> hotelCoupons = couponMapper.selectByHotelId(hotelId);
         return hotelCoupons;
@@ -64,6 +65,7 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public CouponVO addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO) {
+        System.out.println(couponVO.getName());
         Coupon coupon = new Coupon();
         coupon.setCouponName(couponVO.getName());
         coupon.setDescription(couponVO.getDescription());

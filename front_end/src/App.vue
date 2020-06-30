@@ -1,5 +1,26 @@
 <template>
-  <div id="app" v-title data-title="NJUSE酒店管理系统">
+  <div id="app" v-title data-title="OvO">
+    <div id="particles">
+      <vue-particles
+              color="#ABD2EA"
+              :particleOpacity="0.7"
+              :particlesNumber="50"
+              shapeType="circle"
+              :particleSize="5"
+              linesColor="#C1E7FF"
+              :linesWidth="2"
+              :lineLinked="true"
+              :lineOpacity="0.4"
+              :linesDistance="150"
+              :moveSpeed="2"
+              :hoverEffect="true"
+              hoverMode="grab"
+              :clickEffect="true"
+              clickMode="push"
+              class="lizi"
+              style="position: absolute;width: 100%;height: 100%;z-index: 0"
+      ></vue-particles>
+    </div>
     <transition name="fade-transform" mode="out-in">
       <router-view/>
     </transition>
@@ -20,7 +41,8 @@ export default {
   color: #2c3e50;
   width: 100%;
   padding: 20px 100px 144px;
-  background: #f0f2f5 url('assets/background.svg') repeat 100%;
+  background: #F5FBFF;
+  /*background: #f0f2f5 url('assets/background.png') repeat 100%;*/
   min-height: 800px
 }
 

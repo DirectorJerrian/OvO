@@ -1,6 +1,7 @@
 import {
     getManagerListAPI,
     addManagerAPI,
+    deleteManagerAPI,
 } from '@/api/admin'
 import { message } from 'ant-design-vue'
 
@@ -13,6 +14,9 @@ const admin = {
         addManagerParams: {
             email:'',
             password:''
+        },
+        deleteManagerParams:{
+            id:0
         }
     },
     mutations: {
@@ -30,6 +34,16 @@ const admin = {
         }
     },
     actions: {
+        deleteManager: async({ state, dispatch }, userId) => {
+            state.deleteManagerParams.id=userId
+            const res = await deleteManagerAPI(state.deleteManagerParams)
+            if(res) {
+                dispatch('getManagerList')
+                message.success('删除成功')
+            }else{
+                message.error('删除失败')
+            }
+        },
         getManagerList: async({ commit }) => {
             const res = await getManagerListAPI()
             if(res){

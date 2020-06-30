@@ -17,10 +17,16 @@ public class CouponController {
 
     @PostMapping("/hotelTargetMoney")
     public ResponseVO addHotelTargetMoneyCoupon(@RequestBody HotelTargetMoneyCouponVO hotelTargetMoneyCouponVO) {
+        //System.out.println(hotelTargetMoneyCouponVO);
 
         CouponVO couponVO = couponService.addHotelTargetMoneyCoupon(hotelTargetMoneyCouponVO);
 
         return ResponseVO.buildSuccess(couponVO);
+    }
+
+    @GetMapping("/allCoupon")
+    public ResponseVO getAllCoupon(){
+        return ResponseVO.buildSuccess(couponService.getAllCoupon());
     }
 
     @GetMapping("/hotelAllCoupons")

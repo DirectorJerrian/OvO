@@ -19,6 +19,7 @@ public class Hotel {
      * 酒店管理员id
      */
     private Integer managerId;
+    private String cover;
 
     public Integer getId() {
         return id;
@@ -91,5 +92,9 @@ public class Hotel {
     public void setManagerId(Integer managerId) {
         this.managerId = managerId;
     }
+
+    public String getCover() { return cover; }
+
+    public void setCover(String cover) { this.cover = cover; }
 }
 

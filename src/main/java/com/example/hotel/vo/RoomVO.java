@@ -8,6 +8,7 @@ public class RoomVO {
     private Double price;
     private Integer curNum;
     private Integer total;
+    private Integer hotelId;
 
     public Integer getId() {
         return id;
@@ -47,5 +48,13 @@ public class RoomVO {
 
     public void setTotal(Integer total) {
         this.total = total;
+    }
+
+    public Integer getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Integer hotelId) {
+        this.hotelId = hotelId;
     }
 }

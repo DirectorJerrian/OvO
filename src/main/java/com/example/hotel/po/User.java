@@ -11,6 +11,12 @@ public class User {
     private String phoneNumber;
     private double credit;
     private UserType userType;
+    private String avatar;
+    private Integer VIP;
+
+    public Integer getVIP(){return VIP;}
+
+    public void setVIP(Integer VIP){this.VIP=VIP;}
 
     public Integer getId() {
         return id;
@@ -66,5 +72,13 @@ public class User {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

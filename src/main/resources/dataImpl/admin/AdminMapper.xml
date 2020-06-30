@@ -8,7 +8,9 @@
     <select id="getAllManagers" resultMap="User">
         select * from User where usertype='HotelManager'
     </select>
-
+    <delete id="deleteManager" parameterType="int">
+        delete from User where id=#{userId}
+    </delete>
 
     <resultMap id="User" type="com.example.hotel.po.User">
         <id column="id" property="id"></id>
