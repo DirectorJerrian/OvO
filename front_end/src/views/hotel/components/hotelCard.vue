@@ -109,7 +109,7 @@ export default {
         max-height: 420px;
         img {
           height: 300px;
-          width: 248px;
+          width: 100%;
           display:flex;
           align-items:center;
           justify-content:center;
