@@ -9,10 +9,8 @@ import com.example.hotel.po.User;
 import com.example.hotel.vo.OrderRateVO;
 import com.example.hotel.vo.OrderVO;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +32,36 @@ public class OrderServiceTest {
     AccountService accountService;
     @Autowired
     HotelService hotelService;
+
+    @Test
+    public void addOrderTest(){
+        OrderVO orderVO = new OrderVO();
+        orderVO.setOrderState("已预订");
+        orderVO.setCheckInDate("2020-06-30");
+        orderVO.setCheckOutDate("2020-07-01");
+        orderVO.setClientName("测试一号");
+        orderVO.setHotelId(2);
+        orderVO.setHotelName("儒家酒店");
+        orderVO.setPhoneNumber("12345678910");
+        orderVO.setUserId(4);
+        orderVO.setPeopleNum(2);
+        orderVO.setRoomNum(1);
+        orderVO.setHaveChild(true);
+        orderVO.setRoomType("Family");
+        orderVO.setPrice(399.0);
+        orderService.addOrder(orderVO);
+        List<Order> list = orderService.getUserOrders(4);
+        Order order = new Order();
+        BeanUtils.copyProperties(orderVO,order);
+        Order test = list.get(0);
+        assertEquals(test.getPrice(),order.getPrice());
+        assertEquals(test.getOrderState(),order.getOrderState());
+        assertEquals(test.getRoomType(),order.getRoomType());
+        assertEquals(test.getHotelId(),order.getHotelId());
+        assertEquals(test.getCheckInDate(),order.getCheckInDate());
+        assertEquals(test.getUserId(),order.getUserId());
+        assertEquals(test.getCheckOutDate(),order.getCheckOutDate());
+    }
 
     @Test
     public void executeOrderTest(){

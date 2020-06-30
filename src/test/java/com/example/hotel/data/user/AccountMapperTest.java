@@ -1,6 +1,7 @@
 package com.example.hotel.data.user;
 
 import com.example.hotel.data.vip.VipMapper;
+import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vipcard;
 import org.junit.Test;
@@ -18,6 +19,25 @@ public class AccountMapperTest {
     VipMapper vipMapper;
 
 
+    @Test
+    public void createNewAccountTest(){
+        User user = new User();
+        user.setEmail("826947112@qq.com");
+        user.setPassword("123456");
+        user.setUserType(UserType.Client);
+        user.setPhoneNumber("13271909926");
+        user.setUserName("WindRanger");
+        user.setCredit(100);
+        accountMapper.createNewAccount(user);
+        assertEquals(accountMapper.getAccountByName("826947112@qq.com").getId(),user.getId());
+    }
+
+    @Test
+    public void updateUserPasswordTest(){
+        User user = accountMapper.getAccountByName("826947112@qq.com");
+        accountMapper.updatePassword(user.getId(),"654321");
+        assertEquals(accountMapper.getAccountById(user.getId()).getPassword(),"654321");
+    }
 
     @Test
     public void creditTest(){
