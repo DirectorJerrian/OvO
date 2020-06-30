@@ -88,22 +88,22 @@ public class AccountServiceImpl implements AccountService {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         String curdate = sf.format(date);
-        if(curdate.substring(8).equals("01")){
-            //是否为VIP
-            Vipcard vipcard = vipMapper.getVIPInfoByUserId(id);
-            if(vipcard.getLevel()==1){
-                createNewCreditRecord(id, -1,"信用值成长",15);
-            }
-            else if(vipcard.getLevel()==2){
-                createNewCreditRecord(id,-1, "信用值成长", 20);
-            }
-            else if(vipcard.getLevel()==3){
-                createNewCreditRecord(id, -1, "信用值成长", 25);
-            }
-            else {
-                createNewCreditRecord(id, -1, "信用值成长", 10);
-            }
-        }
+//        if(curdate.substring(8).equals("01")){
+//            //是否为VIP
+//            Vipcard vipcard = vipMapper.getVIPInfoByUserId(id);
+//            if(vipcard.getLevel()==1){
+//                createNewCreditRecord(id, -1,"信用值成长",15);
+//            }
+//            else if(vipcard.getLevel()==2){
+//                createNewCreditRecord(id,-1, "信用值成长", 20);
+//            }
+//            else if(vipcard.getLevel()==3){
+//                createNewCreditRecord(id, -1, "信用值成长", 25);
+//            }
+//            else {
+//                createNewCreditRecord(id, -1, "信用值成长", 10);
+//            }
+//        }
 
         User user = accountMapper.getAccountById(id);
         if (user == null) {
