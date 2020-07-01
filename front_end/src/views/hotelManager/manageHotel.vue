@@ -10,7 +10,7 @@
                     :dataSource="targethotelList"
                     bordered
                 >
-                    <span slot="action" slot-scope="record" style="display: inline-block;width: 338px;">
+                    <span slot="action" slot-scope="record" style="display: inline-block;width: 350px;">
                         <a-button type="primary" size="small" @click="addRoom(record)">录入房间</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showCoupon(record)">优惠策略</a-button>
