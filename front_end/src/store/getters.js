@@ -9,6 +9,7 @@ const getters = {
   userAvailableVoucherList: state=>state.user.userAvailableVoucherList,
   //hotel
   hotelListLoading: state => state.hotel.hotelListLoading,
+  hotelListParams: state => state.hotel.hotelListParams,
   hotelList: state => state.hotel.hotelList,
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
