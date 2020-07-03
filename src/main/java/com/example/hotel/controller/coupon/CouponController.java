@@ -15,6 +15,7 @@ public class CouponController {
     @Autowired
     private CouponService couponService;
 
+    //增加满减策略
     @PostMapping("/hotelTargetMoney")
     public ResponseVO addHotelTargetMoneyCoupon(@RequestBody HotelTargetMoneyCouponVO hotelTargetMoneyCouponVO) {
         //System.out.println(hotelTargetMoneyCouponVO);
@@ -23,17 +24,17 @@ public class CouponController {
 
         return ResponseVO.buildSuccess(couponVO);
     }
-
+    //获取所有优惠券
     @GetMapping("/allCoupon")
     public ResponseVO getAllCoupon(){
         return ResponseVO.buildSuccess(couponService.getAllCoupon());
     }
-
+    //获取酒店所有优惠券
     @GetMapping("/hotelAllCoupons")
     public ResponseVO getHotelAllCoupons(@RequestParam Integer hotelId) {
         return ResponseVO.buildSuccess(couponService.getHotelAllCoupon(hotelId));
     }
-
+    //获取匹配规则的优惠券
     @GetMapping("/orderMatchCoupons")
     public ResponseVO getOrderMatchCoupons(@RequestParam Integer userId,
                                            @RequestParam Integer hotelId,
