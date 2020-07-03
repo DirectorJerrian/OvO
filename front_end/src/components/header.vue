@@ -146,7 +146,6 @@ export default {
             height: 66px;
             min-width: 800px;
             image{
-                margin-top: 10px;
                 width: 100%;
                 height: 66px;
             }

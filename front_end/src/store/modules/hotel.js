@@ -22,7 +22,7 @@ const hotel = {
         hotelList: [],
         hotelListParams: {
             pageNo: 0,
-            pageSize: 12
+            pageSize: 8
         },
         hotelListLoading: true,
         currentHotelId: '',

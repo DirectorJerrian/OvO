@@ -21,10 +21,10 @@
                 <a-layout-content style="min-width: 800px;">
                     <a-spin :spinning="hotelListLoading">
                         <div class="card-wrapper">
-                            <HotelCard :hotel="item" v-for="item in hotelList" :key="item.index" @click.native="jumpToDetails(item.id)"></HotelCard>
-                            <div v-for="item in emptyBox" :key="item.name" class="emptyBox ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3"></div>
-                            <a-pagination showQuickJumper :total="50" :defaultCurrent="1" @change="pageChange"></a-pagination>
+                            <HotelCard :hotel="item" v-for="item in hotelList.slice((hotelListParams.pageNo)*pageSize,(hotelListParams.pageNo+1)*pageSize)" :key="item.index" @click.native="jumpToDetails(item.id)"></HotelCard>
+<!--                            <div v-for="item in emptyBox" :key="item.name" class="emptyBox ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3"></div>-->
                         </div>
+                        <a-pagination style="padding-top: 30px" showQuickJumper :total="hotelList.length" :pageSize.sync="pageSize"  @change="pageChange"></a-pagination>
                     </a-spin>
                 </a-layout-content>
             </a-layout>
@@ -45,17 +45,25 @@ export default {
   },
   data(){
     return{
-      emptyBox: [{ name: 'box1' }, { name: 'box2'}, {name: 'box3'}]
+      emptyBox: [{ name: 'box1' }, { name: 'box2'}, {name: 'box3'}],
+      pageSize: 8,
     }
   },
   async mounted() {
-    await this.getHotelList()
+      const data = {
+          pageNo: 0,
+          pageSize: 8
+      }
+      await this.set_hotelListParams(data);
+      console.log(this.hotelListParams)
+      await this.getHotelList();
   },
   computed: {
     ...mapGetters([
         'hotelList',
         'hotelListLoading',
         'searchModalVisible',
+        'hotelListParams'
     ])
   },
   methods: {
@@ -71,7 +79,7 @@ export default {
       ]),
       pageChange(page, pageSize) {
           const data = {
-            pageNo: page - 1
+              pageNo: page - 1
           }
           this.set_hotelListParams(data)
           this.set_hotelListLoading(true)
