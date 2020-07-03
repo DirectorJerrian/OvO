@@ -48,6 +48,7 @@ public class RoomServiceImpl implements RoomService {
 
     }
 
+    //判断目标酒店是否有房型
     @Override
     public List<Boolean> hasType(Integer hotelId) {
         List<Boolean> allType= new ArrayList<>();

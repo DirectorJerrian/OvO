@@ -58,6 +58,7 @@ public class AccountServiceImpl implements AccountService {
         User user = new User();
         BeanUtils.copyProperties(userVO, user);
         User user1 = accountMapper.getAccountByphoneNumber(userVO.getPhoneNumber());
+        //判断用户是否已经存在
         if (user1 != null) {
             return ResponseVO.buildFailure(PHONENUMBER_ERROR);
         }
@@ -169,6 +170,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseVO createNewCreditRecord(int userid,int orderid,String operation,double credit_delta){
+        //设置信息
         CreditRecord creditRecord = new CreditRecord();
         creditRecord.setCredit_delta(credit_delta);
         creditRecord.setOperation(operation);
@@ -180,6 +182,7 @@ public class AccountServiceImpl implements AccountService {
         creditRecord.setOperationDate(curdate);
         User user = getUserInfo(userid);
         creditRecord.setCredit_result(user.getCredit()+credit_delta);
+        //加入数据库
         try{
             creditMapper.createNewRecord(creditRecord);
             accountMapper.updateUserCredit(userid, creditRecord.getCredit_result());
@@ -244,6 +247,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO updateVIPSavings(int userId, VipcardVO vipcardVO) {
         try {
+            //设置九折优惠券属性
             Voucher voucher=new Voucher();
             voucher.setUserId(userId);
             voucher.setDescription("九折优惠券");
@@ -252,6 +256,7 @@ public class AccountServiceImpl implements AccountService {
             voucher.setDiscount_money(0);
             voucher.setNumber(2);
             voucher.setStatus("可使用");
+            //升级时，发放优惠券
             if (vipcardVO.getVip_credit()<100){
                 vipcardVO.setLevel(0);
             }else if(vipcardVO.getVip_credit()<800){
@@ -277,6 +282,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseVO registerVIP(RegisterVIPVO registerVIPVO){
+        //设置VIP信息
         Vipcard vip=new Vipcard();
         vip.setCard_type(registerVIPVO.getType());
         vip.setLevel(0);
@@ -284,6 +290,7 @@ public class AccountServiceImpl implements AccountService {
         vip.setInfo(registerVIPVO.getInfo());
         vip.setUserId(registerVIPVO.getUserId());
         vip.setInfo(registerVIPVO.getInfo());
+        //加入数据库
         try{
             vipMapper.addVipCard(vip);
             accountMapper.registerVIP(vip.getUserId());

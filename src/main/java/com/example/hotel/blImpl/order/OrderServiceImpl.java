@@ -46,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     AccountService accountService;
 
+
+    //刷新订单，将过期订单设为异常
     private void refreshOrders(){
         SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
         Date now=new Date();
@@ -63,22 +65,28 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+
+    //增加订单
     @Override
     public ResponseVO addOrder(OrderVO orderVO) {
         int reserveRoomNum = orderVO.getRoomNum();
         int curNum = hotelService.getRoomCurNum(orderVO.getHotelId(),orderVO.getRoomType());
+        //是否有充足房间
         if(reserveRoomNum>curNum){
             return ResponseVO.buildFailure(ROOMNUM_LACK);
         }
         int numLim=orderVO.isHaveChild()? 4*orderVO.getRoomNum():2*orderVO.getRoomNum();
+        //人数是否合理
         if(orderVO.getPeopleNum()<0 || orderVO.getPeopleNum()>numLim){
             return ResponseVO.buildFailure(PEOPLENUM_ERROR);
         }
         User user = accountService.getUserInfo(orderVO.getUserId());
+        //信用值是否充足
         if(user.getCredit()<=0){
             return ResponseVO.buildFailure(CREDIT_ERROR);
         }
         try {
+            //将值设定，放入数据库
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date(System.currentTimeMillis());
             String curdate = sf.format(date);
@@ -182,15 +190,18 @@ public class OrderServiceImpl implements OrderService {
         return ResponseVO.buildSuccess(RESTOREORDER_SUCCESS);
     }
 
+    //执行订单
     @Override
     public ResponseVO executeOrder(int orderid){
         Order order = orderMapper.getOrderById(orderid);
+        //判断是否订单状态正常
         if(order.getOrderState().equals("已入住") || order.getOrderState().equals("已取消") || order.getOrderState().equals("异常")){
             return ResponseVO.buildFailure("入住失败");
         }
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         String curdate = sf.format(date);
+        //判断时间是否正常
         if(curdate.compareTo(order.getCheckInDate())<0){
             return ResponseVO.buildFailure("不能提前办理入住");
         }
@@ -220,17 +231,21 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream().filter(order -> order.getHotelId().equals(hotelId)).collect(Collectors.toList());
     }
 
+    //更新评分
     public ResponseVO updateRate(OrderRateVO orderRateVO){
         Order order=orderMapper.getOrderById(orderRateVO.getId());
+        //判断是否已经评价
         if(order.getOrderState().equals("已评价")){
             return ResponseVO.buildFailure(HAVEALREADYRATED);
         }
         try{
+            //设置评分
             orderMapper.orderRate(orderRateVO.getId(),orderRateVO.getRate());
             orderMapper.rateOrder(orderRateVO.getId());
             int hotelId=order.getHotelId();
             double newRate=orderMapper.avgRate(hotelId);
             BigDecimal b =new BigDecimal(newRate);
+            //每次过去评价，更新酒店评分
             newRate=b.setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
             hotelMapper.setRate(hotelId,newRate);
 

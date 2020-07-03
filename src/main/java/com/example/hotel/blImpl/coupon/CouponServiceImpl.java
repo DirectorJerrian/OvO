@@ -22,6 +22,7 @@ public class CouponServiceImpl implements CouponService {
 
     private static List<CouponMatchStrategy> strategyList = new ArrayList<>();
 
+    //初始化时，将优惠策略类加入
     @Autowired
     public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,MultipleRoomStrategyImpl multipleRoomStrategy,TimeCouponStrategyImpl timeCouponStrategy,
                              CouponMapper couponMapper) {
@@ -33,7 +34,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
 
-
+    //找到匹配的优惠券
     @Override
     public List<Coupon> getMatchOrderCoupon(OrderVO orderVO) {
 
@@ -63,6 +64,7 @@ public class CouponServiceImpl implements CouponService {
         return hotelCoupons;
     }
 
+    //增加满减优惠券
     @Override
     public CouponVO addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO) {
         System.out.println(couponVO.getName());

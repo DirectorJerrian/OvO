@@ -22,12 +22,14 @@ public class MarketingStaffImpl implements MarketingStaffService {
     @Autowired
     VoucherMapper voucherMapper;
 
+    //信用充值
     public ResponseVO creditCharge(String email,String phoneNumber,int money){
         User user = accountService.getUserInfo(email);
         if (!user.getPhoneNumber().equals(phoneNumber)){
             return ResponseVO.buildFailure("手机号不符，充值失败");
         }
         try {
+            //增加的信用值是充值的10倍
             accountService.createNewCreditRecord(user.getId(), -1, "信用充值", money * 10);
         }catch (Exception e){
             System.out.println(e.getMessage());
