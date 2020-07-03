@@ -52,6 +52,7 @@ public class VoucherServiceImpl implements VoucherService {
         voucherMapper.addVoucher(voucher);
     }
 
+    //给每个人添加优惠券
     @Override
     public void addVoucherToAll(Voucher voucher) {
         List<User> userList=accountMapper.getAllUser();
@@ -69,6 +70,7 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
 
+    //使用优惠券
     @Override
     public ResponseVO useVoucher(int id){
         try{
