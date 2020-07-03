@@ -85,13 +85,29 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public User getUserInfo(int id) {
+        User user = accountMapper.getAccountById(id);
+        if (user == null) {
+            return null;
+        }
+        return user;
+    }
+
+    private void creditGrowth(int id){
         //refresh credit
+        boolean flag = false;
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         String curdate = sf.format(date);
-        /**
-        if(curdate.substring(8).equals("01")){
-            //是否为VIP
+        List<CreditRecord> creditRecords = creditMapper.getUserRecords(id);
+        for(int i=0;i<creditRecords.size();i++){
+            CreditRecord record = creditRecords.get(i);
+            if(record.getOperationDate().substring(0,7).equals(curdate.substring(0, 7))){
+                if (record.getOperation().equals("信用值成长")){
+                    flag = true;
+                }
+            }
+        }
+        if(!flag){
             Vipcard vipcard = vipMapper.getVIPInfoByUserId(id);
             if(vipcard==null){
                 createNewCreditRecord(id, -1, "信用值成长", 10);
@@ -99,21 +115,20 @@ public class AccountServiceImpl implements AccountService {
             else {
                 if (vipcard.getLevel() == 1) {
                     createNewCreditRecord(id, -1, "信用值成长", 15);
-                } else if (vipcard.getLevel() == 2) {
+                }
+                else if (vipcard.getLevel() == 2) {
                     createNewCreditRecord(id, -1, "信用值成长", 20);
-                } else if (vipcard.getLevel() == 3) {
+                }
+                else if (vipcard.getLevel() == 3) {
                     createNewCreditRecord(id, -1, "信用值成长", 25);
-                } else {
+                }
+                else {
                     createNewCreditRecord(id, -1, "信用值成长", 10);
                 }
             }
-        }*/
-        User user = accountMapper.getAccountById(id);
-        if (user == null) {
-            return null;
         }
-        return user;
     }
+
 
     @Override
     public User getUserInfo(String email){
@@ -148,6 +163,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<CreditRecord> getUserCreditRecords(int userid){
+        creditGrowth(userid);
         return creditMapper.getUserRecords(userid);
     }
 

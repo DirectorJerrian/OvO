@@ -250,7 +250,7 @@ const user = {
                 commit('set_userOrderList', res)
             }
         },
-        getUserCreditRecord: async({state,commit})=>{
+        getUserCreditRecord: async({state,commit,dispatch})=>{
             const data = {
                 id: state.userId,
             }
@@ -258,6 +258,7 @@ const user = {
             const res = await getUserCreditRecordAPI(data)
             if(res){
                 commit('set_userCreditRecord',res)
+                dispatch('getUserInfo')
             }
         },
         cancelOrder: async({ state, dispatch }, orderId) => {
