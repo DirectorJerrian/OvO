@@ -49,7 +49,7 @@ public class HotelServiceImpl implements HotelService {
     private RoomService roomService;
 
 
-
+    //增加酒店
     @Override
     public void addHotel(HotelVO hotelVO) throws ServiceException {
         User manager = accountService.getUserInfo(hotelVO.getManagerId());
@@ -68,6 +68,7 @@ public class HotelServiceImpl implements HotelService {
         hotelMapper.insertHotel(hotel);
     }
 
+    //删除酒店
     @Override
     public void deleteHotel(int hotelId) throws ServiceException {
         HotelVO hotelVO = hotelMapper.selectById(hotelId);
@@ -96,6 +97,7 @@ public class HotelServiceImpl implements HotelService {
         return hotelMapper.selectAllHotel();
     }
 
+    //判断是否满足星级条件
     private boolean starSatisfaction(int star,HotelVO hotel){
         String starS=hotel.getHotelStar();
         int hotelStar=0;
@@ -110,6 +112,7 @@ public class HotelServiceImpl implements HotelService {
         else return false;
     }
 
+    //判断是否满足房间条件
     private boolean roomSatisfaction(String room,int id){
         if(room.equals("0"))return true;
         List<HotelRoom> list=roomMapper.roomSatisfaction(id,room);
@@ -120,6 +123,7 @@ public class HotelServiceImpl implements HotelService {
         else return false;
     }
 
+    //判断是否满足名称条件
     private boolean nameSatisfaction(String search,String hotelName)  {
         if(search.equals(""))return true;
         else{
@@ -139,12 +143,14 @@ public class HotelServiceImpl implements HotelService {
     }
 
 
+    //酒店搜索
     @Override
     public List<HotelVO> hotelSearch(HotelSearchVO hotelSearchVO){
         List<HotelVO> firstChoose=hotelMapper.selectQualifiedHotel(hotelSearchVO.getBizRegion(),hotelSearchVO.getRate());
         List<HotelVO> ans=new ArrayList<>();
         System.out.println("酒店的数量为"+firstChoose.size());
         for(HotelVO i: firstChoose){
+            //满足条件为真
             if(starSatisfaction(hotelSearchVO.getStar(),i)&&roomSatisfaction(hotelSearchVO.getRoomType(),i.getId())&&nameSatisfaction(hotelSearchVO.getHotelName(),i.getName())){
                 ans.add(i);
                 System.out.println(i.getId());
@@ -160,6 +166,7 @@ public class HotelServiceImpl implements HotelService {
         return hotelMapper.selectManager(userid);
     }
 
+    //获取酒店信息
     @Override
     public HotelVO retrieveHotelDetails(Integer hotelId) {
         HotelVO hotelVO = hotelMapper.selectById(hotelId);
@@ -178,6 +185,7 @@ public class HotelServiceImpl implements HotelService {
         return hotelVO;
     }
 
+    //获取当前所有的商圈（不重复）
     @Override
     public List<String> getBizRegions(){
         List<String>firstchoose=hotelMapper.getBizRegions();
@@ -206,7 +214,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     ;
-
+    //更新酒店信息
     @Override
     public ResponseVO updateHotelInfo(int id, String name, String bizRegion, String description) {
         try {
@@ -221,9 +229,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
 
     public ResponseVO updateHotelCover(int id, MultipartFile cover) {
-        // Endpoint以杭州为例，其它Region请按实际情况填写。
         String endpoint = ConstantPropertiesUtils.ENDPOINT;
-        // 云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，创建并使用RAM子账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建。
         String accessKeyId = ConstantPropertiesUtils.KEYID;
         String accessKeySecret = ConstantPropertiesUtils.KEYSECRET;
         String bucketName = ConstantPropertiesUtils.BUCKETNAME;
@@ -252,7 +258,7 @@ public class HotelServiceImpl implements HotelService {
             ossClient.shutdown();
 
             //把上传之后oss返回的文件url返回（）
-            //url格式：https://edu-guli-study.oss-cn-beijing.aliyuncs.com/%25U%7EHW%2502P2OH6FXR%29%5B8%60T2A.png
+
             String url = "https://" + bucketName + "." + endpoint + "/" + fileName;
             try {
                 hotelMapper.updateCoverURL(id, url);

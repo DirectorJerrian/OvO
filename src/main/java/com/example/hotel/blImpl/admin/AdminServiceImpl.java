@@ -26,7 +26,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     AccountMapper accountMapper;
-
+    //增加工作人员
     @Override
     public ResponseVO addManager(UserForm userForm) {
         User check=accountMapper.getAccountByName(userForm.getEmail());
@@ -49,6 +49,7 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.getAllManagers();
     }
 
+    //删除工作人员
     @Override
     public ResponseVO deleteManager(int userId){
         try{
