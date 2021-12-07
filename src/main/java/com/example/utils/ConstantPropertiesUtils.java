@@ -24,8 +24,8 @@ public class ConstantPropertiesUtils implements InitializingBean {
 
     /*定义公有静态常量*/
     public static String ENDPOINT="oss-cn-hangzhou.aliyuncs.com";
-    public static String KEYID="LTAI4G8aY3VqV55xwwtvfNyi";
-    public static String KEYSECRET="NoITeRzQHAoFSm9OTx70Oj1TeK1P0G";
+    public static String KEYID="LTAI****************fNyi";
+    public static String KEYSECRET="NoI************************P0G";
     public static String BUCKETNAME="software-engineering-ii";
 
 
